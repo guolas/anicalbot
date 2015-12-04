@@ -15,6 +15,10 @@ class MessageCounter(telepot.helper.ChatHandler):
     @asyncio.coroutine
     def on_message(self, msg):
         if "text" in msg:
+            print("Received from " + msg["from"]["first_name"] +
+                  " the message:")
+            print(msg["text"])
+            print(80 * "-")
             yield from self.sender.sendMessage(msg["text"][::-1])
 
 TOKEN = sys.argv[1]  # get token from command-line
