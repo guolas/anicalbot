@@ -36,8 +36,6 @@ class StoreWeight(telepot.helper.ChatHandler):
         date = dt.datetime.today() - diff
         dates_list = [x[0] for x in self._weight_list[user]]
 
-        print(dates_list)
-        print(date)
         lo = bisect.bisect_left(dates_list, date)
         
         message = ""
@@ -49,7 +47,6 @@ class StoreWeight(telepot.helper.ChatHandler):
         self.sender.sendMessage(message)
 
     def processcommand(self, msg, entity):
-        print(entity)
         txt = msg["text"]
         command = txt[entity["offset"]:entity["length"]]
         days = txt[entity["length"]:].strip()
@@ -71,7 +68,6 @@ class StoreWeight(telepot.helper.ChatHandler):
         anything.
         """
         if "entities" in msg:
-            print(msg["entities"])
             for entity in msg["entities"]:
                 if entity["type"] == "bot_command":
                     if entity["offset"] > 0:
@@ -103,7 +99,15 @@ class StoreWeight(telepot.helper.ChatHandler):
 
         self.sender.sendMessage(message)
 
-TOKEN = sys.argv[1]  # get token from command-line
+"""
+Get the token from the command-line
+"""
+TOKEN = sys.argv[1]
+
+"""
+Get the folder where the data will be stored.
+"""
+# data_folder = sys.argv[2]
 
 bot = telepot.DelegatorBot(TOKEN, [
     pave_event_space()(
